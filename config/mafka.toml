@@ -1,0 +1,8 @@
+topic = "dts-mafka-online-demo"
+group = "dts-golang-client-demo"
+business-appkey = "com.sankuai.bladenode.audit.sqlaudit"
+castle-appkey = "com.sankuai.inf.mafka.castleocto"
+castle-name = "com.meituan.mafka.thrift.castle.CastleService"
+stall-threshold = 1024
+wait-threshold = 2048
+max-retry-times = 10000
