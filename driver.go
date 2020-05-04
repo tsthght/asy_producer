@@ -11,7 +11,7 @@ import (
 
 
 func main() {
-   p, err := mafka.NewAsyProducer("./config/mafka.toml")
+   p, err := mafka.NewAsyProducer("./mafka/mafka.toml")
    if err != nil {
       fmt.Printf("%v", err.Error())
       os.Exit(1)
