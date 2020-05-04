@@ -3,7 +3,7 @@ package syncer
 import (
 	"sync"
 	"time"
-	"github.com/tsthght/asy_producer/mafka"
+	"github.com/tsthght/syncer/mafka"
 	"s3common/s3mafkaclient"
 
 )
