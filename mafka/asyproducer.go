@@ -1,9 +1,11 @@
 package mafka
 
 import (
+	"errors"
 	"flag"
 	"sync"
 	"time"
+	"github.com/BurntSushi/toml"
 	"s3common/s3mafkaclient"
 )
 
