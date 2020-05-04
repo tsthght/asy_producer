@@ -7,7 +7,6 @@ import (
    "time"
 
    "github.com/tsthght/syncer/mafka"
-   dsync "github.com/pingcap/tidb-binlog/drainer/sync"
 )
 
 
