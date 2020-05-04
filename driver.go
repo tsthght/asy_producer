@@ -42,7 +42,4 @@ func main() {
       p.Async(m)
       time.Sleep(5 * time.Second)
    }
-
-   it := dsync.Item{}
-   fmt.Printf("%v\n", it)
 }
