@@ -7,8 +7,6 @@ import (
    "time"
 
    "github.com/tsthght/syncer/mafka"
-
-dsync "github.com/pingcap/tidb-binlog/drainer/sync"
 )
 
 
@@ -43,7 +41,4 @@ func main() {
       p.Async(m)
       time.Sleep(5 * time.Second)
    }
-
-   it := dsync.Item{}
-   fmt.Print("%v\n", it)
 }
