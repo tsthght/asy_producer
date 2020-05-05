@@ -58,9 +58,28 @@ func NewAsyProducer(fn string) (*AsyProducer, error) {
 }
 
 func (p *AsyProducer) Async(msg interface{}) string {
-	if err := p.asyProducer.SendMessageToChan(msg); err != nil {
+	m := msg.(message.Message)
+	if err := p.asyProducer.SendMessageToChan(m); err != nil {
 		return err.Error()
 	}
+
+	waitResume := false
+
+	p.toBeAckCommitTSMu.Lock()
+	p.toBeAckTotalSize += len(m.Msg)
+	if p.toBeAckTotalSize > p.cfg.StallThreshold {
+		p.resumeProduce = make(chan struct{})
+		p.resumeProduceCloseOnce = sync.Once{}
+		waitResume = true
+	}
+	p.toBeAckCommitTSMu.Unlock()
+
+	if waitResume {
+		select {
+		case <-p.resumeProduce:
+		}
+	}
+
 	return ""
 }
 
