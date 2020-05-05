@@ -22,10 +22,8 @@ func main() {
 		fmt.Printf("%v", err.Error())
 		os.Exit(1)
 	}
-
-	time.Sleep(5 * time.Second)
-
 	defer p.Close()
+	time.Sleep(5 * time.Second)
 
 	var wg sync.WaitGroup
 	wg.Add(1)
