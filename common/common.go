@@ -3,8 +3,6 @@ package main
 import "C"
 
 import (
-	"fmt"
-
 	"github.com/tsthght/syncer/mafka"
 )
 
@@ -30,7 +28,8 @@ func AsyncMessage (msg *C.char, t C.long) {
 		return
 	}
 
-	fmt.Printf("%s\n", C.GoString(msg))
+	m := Message{C.GoString(msg), C.GoInt64(t)}
+	p.Async(m)
 }
 
 //export GetLatestApplyTime
@@ -39,3 +38,8 @@ func GetLatestApplyTime() C.long {
 }
 
 func main() {}
+
+type Message struct {
+	Msg string `json:"message"`
+	ApplyTime int64 `json:"ts"`
+}
