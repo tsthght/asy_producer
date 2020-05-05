@@ -7,6 +7,8 @@ package main
 import "C"
 import (
 	"fmt"
+	"time"
+
 	"github.com/pingcap/log"
 	"go.uber.org/zap"
 )
@@ -19,11 +21,12 @@ func main() {
 
 	ret := C.InitProducerOnce(C.CString("../mafka/mafka.toml"))
 	fmt.Printf("ret: %s\n", C.GoString(ret))
+
+	go C.RunProducer()
+
 	for i:=0; i< 10; i++ {
-		C.AsyncMessage(C.CString("hello golang"), 21)
-		p := int64(C.GetLatestApplyTime())
-		log.Info("test")
-		fmt.Printf("## %d\n", p)
+		C.AsyncMessage(C.CString("hello golang"), C.long(i))
+		time.Sleep(1 * time.Second)
 	}
 }
 
