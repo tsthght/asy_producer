@@ -1,9 +1,9 @@
 package main
 
 //#cgo CFLAGS: -I.
-//#cgo LDFLAGS: -L. -lcommon
+//#cgo LDFLAGS: -L ../common  -Wl,-rpath=/usr/local/lib -lcommon
 //
-//#include "common.h"
+//#include "libcommon.h"
 import "C"
 import "fmt"
 
