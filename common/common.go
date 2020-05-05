@@ -28,7 +28,7 @@ func AsyncMessage (msg *C.char, t C.long) {
 		return
 	}
 
-	m := Message{C.GoString(msg), C.GoInt64(t)}
+	m := Message{C.GoString(msg), t}
 	p.Async(m)
 }
 
