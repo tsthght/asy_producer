@@ -26,6 +26,11 @@ func main() {
 
 	C.ConsumeMessage()
 
+	go func() {
+		fmt.Printf("##### %d \n", int64(C.GetLatestApplyTime()))
+		time.Sleep(500 * time.Millisecond)
+	}()
+
 	for i:=0; i< 10; i++ {
 		C.AsyncMessage(C.CString("hello golang"), C.long(i))
 		time.Sleep(1 * time.Second)
