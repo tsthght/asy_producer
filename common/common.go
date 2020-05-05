@@ -26,7 +26,10 @@ func InitProducerOnce(fn *C.char) *C.char {
 
 //export AsyncMessage
 func AsyncMessage (msg *C.char, t C.long) {
-	abcdef ++
+	if p == nil {
+		return
+	}
+
 	fmt.Printf("%s\n", C.GoString(msg))
 }
 
