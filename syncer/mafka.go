@@ -19,6 +19,7 @@ import (
 type MafkaSyncer struct {
 	toBeAckCommitTS orderlist.MapList
 	configFile      string
+	*BaseSyncer
 }
 
 func NewMafkaSyncer(
