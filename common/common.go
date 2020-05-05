@@ -36,7 +36,7 @@ func AsyncMessage (msg *C.char, t C.long) {
 
 //export GetLatestApplyTime
 func GetLatestApplyTime() C.long {
-	return C.long(abcdef)
+	return C.long(p.LastApplyTimestamp)
 }
 
 //export ConsumeMessage
