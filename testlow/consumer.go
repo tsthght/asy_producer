@@ -4,6 +4,7 @@ import (
 	"sync"
 	"fmt"
 	"os"
+	"time"
 
 	"github.com/tsthght/syncer/config"
 	"github.com/tsthght/syncer/mafka"
@@ -21,6 +22,8 @@ func main() {
 		fmt.Printf("%v", err.Error())
 		os.Exit(1)
 	}
+
+	time.Sleep(5 * time.Second)
 
 	defer p.Close()
 
