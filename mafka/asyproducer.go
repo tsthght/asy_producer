@@ -28,6 +28,8 @@ type AsyProducer struct {
 
 	cfg *ProducerConfig
 
+	shutdown chan struct{}
+
 	Consumer *s3mafkaclient.MafkaConsumer//for test
 }
 
@@ -54,7 +56,19 @@ func NewAsyProducer(fn string) (*AsyProducer, error) {
 		return nil, err
 	}
 
+	producer.shutdown = make(chan struct{})
+
 	return producer, nil
+}
+
+func (p *AsyProducer) Close() {
+	if p.asyProducer != nil {
+		p.asyProducer.Close()
+	}
+	if p.Consumer != nil {
+		p.Consumer.Close()
+	}
+	close(p.shutdown)
 }
 
 func (p *AsyProducer) Async(msg interface{}) string {
@@ -124,6 +138,15 @@ func (p *AsyProducer) Run () {
 			}
 		}
 	}()
+
+	for {
+		select {
+		case <-p.shutdown:
+			p.Close()
+			wg.Wait()
+			return
+		}
+	}
 }
 
 func (p *AsyProducer) Consuem() {
