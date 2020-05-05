@@ -31,13 +31,13 @@ func InitProducerOnce(fn *C.char) *C.char {
 }
 
 //export AsyncMessage
-func AsyncMessage (msg *C.char, t C.long) {
+func AsyncMessage (msg *C.char, t C.long) *C.char {
 	if p == nil {
-		return
+		return C.CString("")
 	}
 
 	m := message.Message{C.GoString(msg), int64(t)}
-	p.Async(m)
+	return C.CString(p.Async(m))
 }
 
 //export GetLatestApplyTime
