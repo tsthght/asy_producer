@@ -129,7 +129,3 @@ func (p *AsyProducer) Run () {
 		}
 	}
 }
-
-//func (p *AsyProducer) Consuem() {
-//	go p.Consumer.ConsumeMessage(&BasicHandler{1})
-//}
