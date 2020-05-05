@@ -7,7 +7,6 @@ import (
 
 	"github.com/tsthght/syncer/config"
 	"github.com/tsthght/syncer/message"
-	"go.uber.org/zap"
 	"s3common/s3mafkaclient"
 )
 
