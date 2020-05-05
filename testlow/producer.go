@@ -25,6 +25,8 @@ func main() {
       os.Exit(1)
    }
 
+   defer p.Close()
+
    var wg sync.WaitGroup
    wg.Add(1)
    go func() {
@@ -47,6 +49,4 @@ func main() {
       p.Async(m)
       time.Sleep(5 * time.Second)
    }
-
-   p.Close()
 }
