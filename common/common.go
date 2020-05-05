@@ -44,4 +44,9 @@ func ConsumeMessage() {
 	p.Consuem()
 }
 
+//export CloseProducer
+func CloseProducer() {
+	p.Close()
+}
+
 func main() {}
