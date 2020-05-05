@@ -53,9 +53,6 @@ func (p *AsyProducer) Close() {
 	if p.asyProducer != nil {
 		p.asyProducer.Close()
 	}
-	if p.Consumer != nil {
-		p.Consumer.Close()
-	}
 	close(p.shutdown)
 }
 
@@ -83,10 +80,6 @@ func (p *AsyProducer) Async(msg interface{}) string {
 	}
 
 	return ""
-}
-
-func (p *AsyProducer) GetProducerConfig () *ProducerConfig {
-	return p.cfg
 }
 
 func (p *AsyProducer) Run () {
@@ -137,6 +130,6 @@ func (p *AsyProducer) Run () {
 	}
 }
 
-func (p *AsyProducer) Consuem() {
-	go p.Consumer.ConsumeMessage(&BasicHandler{1})
-}
+//func (p *AsyProducer) Consuem() {
+//	go p.Consumer.ConsumeMessage(&BasicHandler{1})
+//}
