@@ -11,7 +11,7 @@ import (
 
 func main() {
 	cfg := config.NewProducerConfig()
-	err := cfg.Parse("./mafka/mafka.toml")
+	err := cfg.Parse("../mafka/mafka.toml")
 	if err != nil{
 		fmt.Printf("%s\n", err.Error())
 		os.Exit(1)
