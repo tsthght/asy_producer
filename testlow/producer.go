@@ -41,7 +41,7 @@ func main() {
       }
    }()
 
-   //just for test
+   //just for testmedium
    //go p.Consumer.ConsumeMessage(&mafka.BasicHandler{1})
 
    for i := 10; i > 0 ; i-- {

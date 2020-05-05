@@ -15,7 +15,7 @@ import (
 )
 
 func main() {
-	cfg := &log.Config{Level: "debug", File: log.FileLogConfig{Filename:"./test.log"}, DisableTimestamp: true}
+	cfg := &log.Config{Level: "debug", File: log.FileLogConfig{Filename:"./testmedium.log"}, DisableTimestamp: true}
 	lg, _globalP, _ := log.InitLogger(cfg)
 	lg = lg.WithOptions(zap.AddStacktrace(zap.DPanicLevel))
 	log.ReplaceGlobals(lg, _globalP)
