@@ -1,4 +1,4 @@
-package mafkasync
+package orderlist
 
 import (
 	"container/list"
