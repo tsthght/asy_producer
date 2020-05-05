@@ -5,6 +5,8 @@ import (
 	"flag"
 	"sync"
 	"time"
+	"fmt"
+
 	"github.com/BurntSushi/toml"
 	"s3common/s3mafkaclient"
 )
@@ -18,7 +20,7 @@ type AsyProducer struct {
 	resumeProduce          chan struct{}
 	resumeProduceCloseOnce sync.Once
 
-	LastApplyTime  int64
+	LastApplyTimestamp  int64
 
 	CallBack MafkaCallBack
 
@@ -62,6 +64,22 @@ func (p *AsyProducer) Async(msg interface{}) string {
 
 func (p *AsyProducer) GetProducerConfig () *ProducerConfig {
 	return p.cfg
+}
+
+func (p *AsyProducer) Run () {
+	var wg sync.WaitGroup
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for {
+			select {
+			case msgs := <- p.CallBack.SuccessChan:
+				for _, msg := range msgs {
+					fmt.Printf("##msg = %s\n", msg)
+				}
+			}
+		}
+	}()
 }
 
 type ProducerConfig struct {

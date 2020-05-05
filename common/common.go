@@ -22,6 +22,7 @@ func InitProducerOnce(fn *C.char) *C.char {
 	if err != nil {
 		return C.CString(err.Error())
 	}
+	go p.Run()
 	return C.CString("")
 }
 
@@ -33,23 +34,6 @@ func AsyncMessage (msg *C.char, t C.long) {
 
 	m := Message{C.GoString(msg), int64(t)}
 	p.Async(m)
-}
-
-//export RunProducer
-func RunProducer() {
-	var wg sync.WaitGroup
-	wg.Add(1)
-	go func() {
-		defer wg.Done()
-		for {
-			select {
-			case msgs := <- p.CallBack.SuccessChan:
-				for _, msg := range msgs {
-					fmt.Printf("##msg = %s\n", msg)
-				}
-			}
-		}
-	}()
 }
 
 //export GetLatestApplyTime

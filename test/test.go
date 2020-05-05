@@ -22,8 +22,6 @@ func main() {
 	ret := C.InitProducerOnce(C.CString("../mafka/mafka.toml"))
 	fmt.Printf("ret: %s\n", C.GoString(ret))
 
-	go C.RunProducer()
-
 	for i:=0; i< 10; i++ {
 		C.AsyncMessage(C.CString("hello golang"), C.long(i))
 		time.Sleep(1 * time.Second)
