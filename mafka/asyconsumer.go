@@ -27,3 +27,7 @@ func NewAsyConsumer(cfg *config.ProducerConfig) (*AsyConsumer, error) {
 func (c *AsyConsumer) PrintConsuem() {
 	c.consumer.ConsumeMessage(&BasicHandler{1})
 }
+
+func (c *AsyConsumer) Close() {
+	c.consumer.Close()
+}

@@ -25,6 +25,5 @@ func main() {
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go p.PrintConsuem()
-
 	wg.Wait()
 }
