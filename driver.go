@@ -6,18 +6,23 @@ import (
    "sync"
    "time"
 
+   "github.com/tsthght/syncer/config"
    "github.com/tsthght/syncer/mafka"
 )
 
 
 func main() {
-   p, err := mafka.NewAsyProducer("./mafka/mafka.toml")
+   cfg := config.NewProducerConfig()
+   err := cfg.Parse("./mafka/mafka.toml")
+   if err != nil{
+      fmt.Printf("%s\n", err.Error())
+      os.Exit(1)
+   }
+   p, err := mafka.NewAsyProducer(cfg)
    if err != nil {
       fmt.Printf("%v", err.Error())
       os.Exit(1)
    }
-   cfg := p.GetProducerConfig()
-   fmt.Printf("%v\n", cfg.Topic)
 
    var wg sync.WaitGroup
    wg.Add(1)
@@ -27,14 +32,14 @@ func main() {
          select {
          case msgs := <- p.CallBack.SuccessChan:
             for _, msg := range msgs {
-               fmt.Printf("##msg = %s\n", msg)
+               fmt.Printf("## msg = %s\n", msg)
             }
          }
       }
    }()
 
    //just for test
-   go p.Consumer.ConsumeMessage(&mafka.BasicHandler{1})
+   //go p.Consumer.ConsumeMessage(&mafka.BasicHandler{1})
 
    for i := 1000; i > 0 ; i-- {
       m := mafka.MafkaMessage{i}
