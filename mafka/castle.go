@@ -1,10 +1,11 @@
 package mafka
 
 import (
+	"github.com/tsthght/syncer/config"
 	"s3common/s3castleclient"
 )
 
-func newCastleClient(cfg *ProducerConfig) (castleManager *s3castleclient.CastleClientManager, err error) {
+func newCastleClient(cfg *config.ProducerConfig) (castleManager *s3castleclient.CastleClientManager, err error) {
 	var ip, host string
 	err, ip = GetLocalIP()
 	if err != nil {

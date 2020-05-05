@@ -1,6 +1,7 @@
 package mafka
 
 import (
+	"github.com/tsthght/syncer/config"
 	"github.com/tsthght/syncer/message"
 	"s3common/s3castleclient"
 	"s3common/s3mafkaclient"
@@ -8,7 +9,7 @@ import (
 	"fmt"
 )
 
-func newConsumer(castleManager *s3castleclient.CastleClientManager, cfg *ProducerConfig) (consumer *s3mafkaclient.MafkaConsumer, err error) {
+func newConsumer(castleManager *s3castleclient.CastleClientManager, cfg *config.ProducerConfig) (consumer *s3mafkaclient.MafkaConsumer, err error) {
 	if castleManager == nil {
 		return nil, s3mafkaclient.ErrProducerInvalidConfig
 	}

@@ -1,11 +1,12 @@
 package mafka
 
 import (
+	"github.com/tsthght/syncer/config"
 	"s3common/s3castleclient"
 	"s3common/s3mafkaclient"
 )
 
-func newAsynProducer(castleManager *s3castleclient.CastleClientManager, cfg *ProducerConfig,
+func newAsynProducer(castleManager *s3castleclient.CastleClientManager, cfg *config.ProducerConfig,
 	callback s3mafkaclient.SenderCallback) (asynProducer *s3mafkaclient.MafkaAsynProducer, err error) {
 	if castleManager == nil {
 		return nil, s3mafkaclient.ErrProducerInvalidConfig
