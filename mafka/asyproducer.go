@@ -18,6 +18,8 @@ type AsyProducer struct {
 	resumeProduce          chan struct{}
 	resumeProduceCloseOnce sync.Once
 
+	LastApplyTime  int64
+
 	CallBack MafkaCallBack
 
 	cfg *ProducerConfig
