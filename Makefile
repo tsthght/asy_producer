@@ -1,6 +1,6 @@
 build:
-	go build driver.go
+	go build producer.go
 clean:
-	rm -rf driver
-run:
-	./driver
+	rm -rf producer
+producer:
+	./producer
