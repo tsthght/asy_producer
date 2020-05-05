@@ -1,4 +1,5 @@
-package main
+package syncer
+
 //#cgo CFLAGS: -I ../common
 //#cgo LDFLAGS: -L ../common  -Wl,-rpath=/usr/local/lib -lcommon
 //
