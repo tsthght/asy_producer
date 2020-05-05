@@ -1,6 +1,7 @@
 package mafka
 
 import (
+	"github.com/tsthght/syncer/message"
 	"s3common/s3castleclient"
 	"s3common/s3mafkaclient"
 	"encoding/json"
@@ -26,7 +27,7 @@ type BasicHandler struct {
 func (handler *BasicHandler) RecvMessage(msg *s3mafkaclient.ConsumerMessage) int {
 	fmt.Printf("#### handler: cluster=[%s] id=[%d] recvMessage messages topic=[%s] partition=[%d] offset=[%d] key=[%v], value=[%s] \n", msg.Cluster, handler.ID, msg.Topic, msg.Partition, msg.Offset, msg.Key, string(msg.Value))
 
-	var mm MafkaMessage
+	var mm message.Message
 	if tmpErr := json.Unmarshal(msg.Value, &mm); tmpErr != nil {
 		fmt.Printf("recvMsgsByConusmer:  json unmarshal fail, err=%s\n", tmpErr)
 	} else {
