@@ -22,8 +22,6 @@ func main() {
 	ret := C.InitProducerOnce(C.CString("../mafka/mafka.toml"))
 	fmt.Printf("ret: %s\n", C.GoString(ret))
 
-	C.ConsumeMessage()
-
 	go func() {
 		for i:=1;i > 0; i++ {
 			fmt.Printf("##### %d \n", int64(C.GetLatestApplyTime()))

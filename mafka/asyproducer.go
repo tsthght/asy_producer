@@ -115,7 +115,7 @@ func (p *AsyProducer) Run () {
 			select {
 			case err := <- p.CallBack.FailureChan:
 				e := err.(error)
-				log.Fatal("fail to produce message to Mafka, please check the state of kafka server", zap.Error(e))
+				log.Fatal("fail to produce message to Mafka, please check the state of kafka server", e.Error())
 			}
 		}
 	}()
