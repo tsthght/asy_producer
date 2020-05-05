@@ -4,6 +4,7 @@ import "C"
 
 import (
 	"github.com/tsthght/syncer/mafka"
+	"github.com/tsthght/syncer/message"
 )
 
 var p *mafka.AsyProducer = nil
@@ -29,7 +30,7 @@ func AsyncMessage (msg *C.char, t C.long) {
 		return
 	}
 
-	m := Message{C.GoString(msg), int64(t)}
+	m := message.Message{C.GoString(msg), int64(t)}
 	p.Async(m)
 }
 
@@ -39,8 +40,3 @@ func GetLatestApplyTime() C.long {
 }
 
 func main() {}
-
-type Message struct {
-	Msg string `json:"message"`
-	ApplyTime int64 `json:"timestamp"`
-}

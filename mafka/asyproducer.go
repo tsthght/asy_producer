@@ -3,11 +3,13 @@ package mafka
 import (
 	"errors"
 	"flag"
+	"log"
 	"sync"
 	"time"
-	"fmt"
 
 	"github.com/BurntSushi/toml"
+	"github.com/tsthght/syncer/message"
+	"go.uber.org/zap"
 	"s3common/s3mafkaclient"
 )
 
@@ -75,8 +77,31 @@ func (p *AsyProducer) Run () {
 			select {
 			case msgs := <- p.CallBack.SuccessChan:
 				for _, msg := range msgs {
-					fmt.Printf("##msg = %s\n", msg)
+					m := msg.(message.Message)
+					p.LastApplyTimestamp = m.ApplyTime
+
+					p.toBeAckCommitTSMu.Lock()
+					p.lastSuccessTime = time.Now()
+					p.toBeAckTotalSize -= len(m.Msg)
+					if p.toBeAckTotalSize < p.cfg.StallThreshold && p.resumeProduce != nil {
+						p.resumeProduceCloseOnce.Do(func() {
+							close(p.resumeProduce)
+						})
+					}
+					p.toBeAckCommitTSMu.Unlock()
 				}
+			}
+		}
+	}()
+
+	wg.Add(1)
+	go func() {
+		defer wg.Done()
+		for {
+			select {
+			case err := <- p.CallBack.FailureChan:
+				e := err.(error)
+				log.Fatal("fail to produce message to Mafka, please check the state of kafka server", zap.Error(e))
 			}
 		}
 	}()
