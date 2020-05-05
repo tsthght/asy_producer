@@ -11,7 +11,7 @@ import (
 	"github.com/pingcap/tidb-binlog/drainer/loopbacksync"
 	"github.com/pingcap/tidb-binlog/drainer/relay"
 	dsync "github.com/pingcap/tidb-binlog/drainer/sync"
-	"github.com/pingcap/syncer/orderlist"
+	"github.com/tsthght/syncer/orderlist"
 	"github.com/prometheus/client_golang/prometheus"
 	"github.com/pingcap/tidb-binlog/drainer/translator"
 )
