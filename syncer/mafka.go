@@ -62,3 +62,5 @@ func (ms *MafkaSyncer) Error() <-chan error {
 func (ms *MafkaSyncer) SetSafeMode(mode bool) bool {
 	return false
 }
+
+// go mod edit -replace=old[@v]=new[@v]
