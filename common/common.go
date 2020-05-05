@@ -12,7 +12,7 @@ import (
 var p *mafka.AsyProducer = nil
 
 //export InitProducerOnce
-func InitProducerOnce(fn C.string) {
+func InitProducerOnce(fn *C.char) {
 	if p != nil {
 		return
 	}
@@ -27,13 +27,13 @@ func InitProducerOnce(fn C.string) {
 }
 
 //export AsyncMessage
-func AsyncMessage (msg C.string, t C.int64) {
+func AsyncMessage (msg *C.char, t C.long) {
 
 }
 
 //export GetLatestApplyTime
-func GetLatestApplyTime() C.int64 {
-	return p.LastApplyTime
+func GetLatestApplyTime() C.long {
+	return C.long(p.LastApplyTime)
 }
 
 func main() {}
