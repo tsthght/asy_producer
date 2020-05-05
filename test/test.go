@@ -11,8 +11,6 @@ import (
 
 	"github.com/pingcap/log"
 	"go.uber.org/zap"
-
-	dsync "github.com/pingcap/tidb-binlog/drainer/sync"
 )
 
 func main() {
@@ -37,9 +35,6 @@ func main() {
 		C.AsyncMessage(C.CString("hello golang"), C.long(i))
 		time.Sleep(1 * time.Second)
 	}
-
-	it := dsync.Item{}
-	fmt.Printf("%v\n", it)
 }
 
 
