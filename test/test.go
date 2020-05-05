@@ -37,6 +37,8 @@ func main() {
 		C.AsyncMessage(C.CString("hello golang"), C.long(i))
 		time.Sleep(1 * time.Second)
 	}
+
+	C.CloseProducer()
 }
 
 
