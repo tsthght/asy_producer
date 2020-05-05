@@ -27,7 +27,7 @@ func main() {
 	C.ConsumeMessage()
 
 	go func() {
-		for i:=0;i==0; i++ {
+		for i:=1;i > 0; i++ {
 			fmt.Printf("##### %d \n", int64(C.GetLatestApplyTime()))
 			time.Sleep(500 * time.Millisecond)
 		}
