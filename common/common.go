@@ -4,7 +4,6 @@ import "C"
 
 import (
 	"fmt"
-	"os"
 
 	"github.com/tsthght/syncer/mafka"
 )
@@ -13,18 +12,16 @@ var p *mafka.AsyProducer = nil
 var abcdef int64 = 1024
 
 //export InitProducerOnce
-func InitProducerOnce(fn *C.char) {
+func InitProducerOnce(fn *C.char) *C.char {
 	if p != nil {
-		return
+		return C.CString("")
 	}
 	var err error
 	p, err = mafka.NewAsyProducer("./mafka/mafka.toml")
 	if err != nil {
-		fmt.Printf("%v", err.Error())
-		os.Exit(1)
+		return C.CString(err.Error())
 	}
-	cfg := p.GetProducerConfig()
-	fmt.Printf("%v\n", cfg.Topic)
+	return C.CString("")
 }
 
 //export AsyncMessage
