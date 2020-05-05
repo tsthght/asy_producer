@@ -28,7 +28,8 @@ func InitProducerOnce(fn *C.char) {
 
 //export AsyncMessage
 func AsyncMessage (msg *C.char, t C.long) {
-
+	p.LastApplyTime ++
+	fmt.Printf("%s\n", string(msg))
 }
 
 //export GetLatestApplyTime
