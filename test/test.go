@@ -1,7 +1,7 @@
 package main
 
-//#cgo CFLAGS: -I ../common
-//#cgo LDFLAGS: -L ../common -lcommon
+//#cgo CFLAGS: -I.
+//#cgo LDFLAGS: -L. -lcommon
 //
 //#include "common.h"
 import "C"
