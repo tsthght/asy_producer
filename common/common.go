@@ -39,6 +39,7 @@ func GetLatestApplyTime() C.long {
 	return C.long(abcdef)
 }
 
+//export ConsumeMessage
 func ConsumeMessage() {
 	p.Consuem()
 }
