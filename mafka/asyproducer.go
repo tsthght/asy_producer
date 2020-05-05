@@ -126,6 +126,10 @@ func (p *AsyProducer) Run () {
 	}()
 }
 
+func (p *AsyProducer) Consuem() {
+	go p.Consumer.ConsumeMessage(&BasicHandler{1})
+}
+
 type ProducerConfig struct {
 	fs                         *flag.FlagSet
 	Topic                      string      `toml:"topic" json:"topic"`
