@@ -22,6 +22,8 @@ func main() {
 		os.Exit(1)
 	}
 
+	defer p.Close()
+
 	var wg sync.WaitGroup
 	wg.Add(1)
 	go p.PrintConsuem()
