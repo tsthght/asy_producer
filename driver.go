@@ -8,6 +8,7 @@ import (
 
    "github.com/tsthght/syncer/config"
    "github.com/tsthght/syncer/mafka"
+   "github.com/tsthght/syncer/message"
 )
 
 
@@ -41,8 +42,8 @@ func main() {
    //just for test
    //go p.Consumer.ConsumeMessage(&mafka.BasicHandler{1})
 
-   for i := 1000; i > 0 ; i-- {
-      m := mafka.MafkaMessage{i}
+   for i := 10; i > 0 ; i-- {
+      m := message.Message{"demo", i}
       p.Async(m)
       time.Sleep(5 * time.Second)
    }
