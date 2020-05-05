@@ -8,9 +8,14 @@ import "C"
 import (
 	"fmt"
 	"github.com/pingcap/log"
+	"go.uber.org/zap"
 )
 
 func main() {
+	cfg := &log.Config{Level: "debug", File: log.FileLogConfig{Filename:"./test.log"}, DisableTimestamp: true}
+	lg, _globalP, _ := log.InitLogger(cfg)
+	lg = lg.WithOptions(zap.AddStacktrace(zap.DPanicLevel))
+	log.ReplaceGlobals(lg, _globalP)
 	for i:=0; i< 10; i++ {
 		C.AsyncMessage(C.CString("hello golang"), 21)
 		p := int64(C.GetLatestApplyTime())
