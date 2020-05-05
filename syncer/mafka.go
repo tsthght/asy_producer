@@ -8,12 +8,12 @@ import "C"
 import (
 	"errors"
 
-	"github.com/tsthght/tidb-binlog/drainer/loopbacksync"
-	"github.com/tsthght/tidb-binlog/drainer/relay"
-	dsync "github.com/tsthght/tidb-binlog/drainer/sync"
-	"github.com/tsthght/syncer/orderlist"
+	"github.com/pingcap/tidb-binlog/drainer/loopbacksync"
+	"github.com/pingcap/tidb-binlog/drainer/relay"
+	dsync "github.com/pingcap/tidb-binlog/drainer/sync"
+	"github.com/pingcap/syncer/orderlist"
 	"github.com/prometheus/client_golang/prometheus"
-	"github.com/tsthght/tidb-binlog/drainer/translator"
+	"github.com/pingcap/tidb-binlog/drainer/translator"
 )
 
 type MafkaSyncer struct {
