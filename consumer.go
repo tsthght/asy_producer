@@ -2,13 +2,11 @@ package main
 
 import (
 	"sync"
-	"time"
 	"fmt"
 	"os"
 
 	"github.com/tsthght/syncer/config"
 	"github.com/tsthght/syncer/mafka"
-	"github.com/tsthght/syncer/message"
 )
 
 func main() {
