@@ -51,16 +51,8 @@ func (ms *MafkaSyncer) Close() error {
 	return nil
 }
 
-func (ms *MafkaSyncer) Successes() <-chan *dsync.Item {
-	return nil
-}
-
-func (ms *MafkaSyncer) Error() <-chan error {
-	return nil
-}
-
 func (ms *MafkaSyncer) SetSafeMode(mode bool) bool {
 	return false
 }
 
-// go mod edit -replace=old[@v]=new[@v]
+// go mod edit -replace=github.com/pingcap/tidb-binlog=github.com/tsthght/tidb-binlog@release3.0-plugin
