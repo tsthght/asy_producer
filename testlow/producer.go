@@ -47,4 +47,6 @@ func main() {
       p.Async(m)
       time.Sleep(5 * time.Second)
    }
+
+   p.Close()
 }
