@@ -43,7 +43,7 @@ func main() {
    //go p.Consumer.ConsumeMessage(&mafka.BasicHandler{1})
 
    for i := 10; i > 0 ; i-- {
-      m := message.Message{"demo", i}
+      m := message.Message{"demo", int64(i)}
       p.Async(m)
       time.Sleep(5 * time.Second)
    }
