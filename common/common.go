@@ -3,9 +3,6 @@ package main
 import "C"
 
 import (
-	"sync"
-	"fmt"
-
 	"github.com/tsthght/syncer/mafka"
 )
 
