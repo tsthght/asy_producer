@@ -27,8 +27,10 @@ func main() {
 	C.ConsumeMessage()
 
 	go func() {
-		fmt.Printf("##### %d \n", int64(C.GetLatestApplyTime()))
-		time.Sleep(500 * time.Millisecond)
+		for i:=0;i==0; i++ {
+			fmt.Printf("##### %d \n", int64(C.GetLatestApplyTime()))
+			time.Sleep(500 * time.Millisecond)
+		}
 	}()
 
 	for i:=0; i< 10; i++ {
