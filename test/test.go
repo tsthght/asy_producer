@@ -26,6 +26,10 @@ func main() {
 		os.Exit(1)
 	}
 
+	defer C.CloseProducer()
+
+	time.Sleep(5 * time.Second)
+
 	go func() {
 		for i:=1;i > 0; i++ {
 			fmt.Printf("##### %d \n", int64(C.GetLatestApplyTime()))
@@ -37,8 +41,6 @@ func main() {
 		C.AsyncMessage(C.CString("hello golang"), C.long(i))
 		time.Sleep(1 * time.Second)
 	}
-
-	C.CloseProducer()
 }
 
 
