@@ -38,7 +38,10 @@ func main() {
 	}()
 
 	for i:=0; i< 10; i++ {
-		C.AsyncMessage(C.CString("hello golang"), C.long(i))
+		ret := C.AsyncMessage(C.CString("hello golang"), C.long(i))
+		if len(C.GoString(ret)) > 0 {
+			fmt.Printf("async error: %s\n", C.GoString(ret))
+		}
 		time.Sleep(1 * time.Second)
 	}
 }
