@@ -17,7 +17,7 @@ func InitProducerOnce(fn *C.char) *C.char {
 		return C.CString("")
 	}
 	var err error
-	p, err = mafka.NewAsyProducer("./mafka/mafka.toml")
+	p, err = mafka.NewAsyProducer(C.GoString(fn))
 	if err != nil {
 		return C.CString(err.Error())
 	}
