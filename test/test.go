@@ -7,6 +7,7 @@ package main
 import "C"
 import (
 	"fmt"
+	"os"
 	"time"
 
 	"github.com/pingcap/log"
@@ -20,7 +21,10 @@ func main() {
 	log.ReplaceGlobals(lg, _globalP)
 
 	ret := C.InitProducerOnce(C.CString("../mafka/mafka.toml"))
-	fmt.Printf("ret: %s\n", C.GoString(ret))
+	if len(C.GoString(ret)) > 0 {
+		fmt.Printf("ret: %s\n", C.GoString(ret))
+		os.Exit(1)
+	}
 
 	go func() {
 		for i:=1;i > 0; i++ {
