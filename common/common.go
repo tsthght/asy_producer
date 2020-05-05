@@ -3,6 +3,7 @@ package main
 import "C"
 
 import (
+	"github.com/tsthght/syncer/config"
 	"github.com/tsthght/syncer/mafka"
 	"github.com/tsthght/syncer/message"
 )
@@ -15,8 +16,13 @@ func InitProducerOnce(fn *C.char) *C.char {
 	if p != nil {
 		return C.CString("")
 	}
-	var err error
-	p, err = mafka.NewAsyProducer(C.GoString(fn))
+	cfg := config.NewProducerConfig()
+	err := cfg.Parse(C.GoString(fn))
+	if err != nil {
+		return C.CString(err.Error())
+	}
+
+	p, err = mafka.NewAsyProducer(cfg)
 	if err != nil {
 		return C.CString(err.Error())
 	}
@@ -37,11 +43,6 @@ func AsyncMessage (msg *C.char, t C.long) {
 //export GetLatestApplyTime
 func GetLatestApplyTime() C.long {
 	return C.long(p.LastApplyTimestamp)
-}
-
-//export ConsumeMessage
-func ConsumeMessage() {
-	p.Consuem()
 }
 
 //export CloseProducer
