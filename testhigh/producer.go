@@ -92,7 +92,6 @@ func (ms *MafkaSyncer) Run () {
 
 		for ; ; {
 			ts := int64(C.GetLatestApplyTime())
-			fmt.Printf("====== %d\n", ts)
 			ms.toBeAckCommitTSMu.Lock()
 			var next *list.Element
 			for elem := ms.toBeAckCommitTS.GetDataList().Front(); elem != nil; elem = next {

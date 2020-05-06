@@ -44,5 +44,6 @@ func (handler *BasicHandler) RecvMessage(msg *s3mafkaclient.ConsumerMessage) int
 			testRecvMsgsLock.Unlock()
 		}
 	}*/
-	return s3mafkaclient.ConsumeStatusFailure
+	//return s3mafkaclient.ConsumeStatusFailure
+	return s3mafkaclient.ConsumeStatusSuccess
 }
