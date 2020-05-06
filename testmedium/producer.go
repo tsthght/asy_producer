@@ -29,14 +29,14 @@ func main() {
 	defer C.CloseProducer()
 
 	time.Sleep(5 * time.Second)
-
+/*
 	go func() {
 		for i:=1;i > 0; i++ {
 			fmt.Printf("##### %d \n", int64(C.GetLatestApplyTime()))
 			time.Sleep(500 * time.Millisecond)
 		}
 	}()
-
+*/
 	for i:=0; i< 10; i++ {
 		ret := C.AsyncMessage(C.CString("hello golang"), C.long(i))
 		if len(C.GoString(ret)) > 0 {
