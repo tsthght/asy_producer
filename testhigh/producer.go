@@ -168,7 +168,7 @@ func main() {
 	//generator data
 	go func() {
 		time.Sleep(5 * time.Second)
-		for i:=1;i > 0; i++ {
+		for i:=1;i < 500; i++ {
 			/*
 			if i == 20 {
 				producer.Close()
