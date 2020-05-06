@@ -113,7 +113,7 @@ func (ms *MafkaSyncer) Run () {
 	for {
 		select {
 		case it := <- ms.success: {
-			fmt.Printf("\n## %s, %d \n", it.data, it.ts)
+			fmt.Printf("\n##success## %s, %d \n", it.data, it.ts)
 		}
 		case <-ms.shutdown:
 			C.CloseProducer()
