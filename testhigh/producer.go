@@ -122,6 +122,7 @@ func (ms *MafkaSyncer) Run () {
 					//err := errors.New(fmt.Sprintf("fail to push msg to kafka after %v, check if kafka is up and working", ms.maxWaitThreshold))
 					//ms.SetErr(err)
 					ms.Close()
+					fmt.Printf("#### close now #########################\n")
 				}
 				ms.toBeAckCommitTSMu.Unlock()
 			case <-ms.shutdown:
