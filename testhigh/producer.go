@@ -39,7 +39,7 @@ func NewMafkaSyncer(cfgFile string) (*MafkaSyncer, error){
 	}
 	ret := C.InitProducerOnce(C.CString(cfgFile))
 	if len(C.GoString(ret)) == 0 {
-		return nil, errors.New("init producer error")
+		return nil, errors.New(C.GoString(ret))
 	}
 
 	executor := &MafkaSyncer{}
