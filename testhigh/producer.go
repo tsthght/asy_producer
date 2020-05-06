@@ -32,6 +32,7 @@ func(b *baseSyncer) Success() chan *Item {
 }
 
 type MafkaSyncer struct {
+	maxWaitThreshold int64
 	toBeAckCommitTSMu      sync.Mutex
 	toBeAckCommitTS *orderlist.MapList
 	shutdown chan struct{}
@@ -60,6 +61,7 @@ func NewMafkaSyncer(cfgFile string) (*MafkaSyncer, error){
 		toBeAckCommitTS: orderlist.NewMapList(),
 		shutdown: make(chan struct{}),
 		baseSyncer: newBaseSyncer(),
+		maxWaitThreshold: int64(C.GetWaitThreshold()),
 	}
 
 	return executor, nil
@@ -112,10 +114,17 @@ func (ms *MafkaSyncer) Run () {
 					}
 				}
 				fmt.Printf("##### after : %d\n", ms.toBeAckCommitTS.Size())
+
+				tss := int64(C.GetLatestSuccessTime())
+				if ms.toBeAckCommitTS.Size() > 0 && time.Now().Unix() - tss > ms.maxWaitThreshold {
+					//err := errors.New(fmt.Sprintf("fail to push msg to kafka after %v, check if kafka is up and working", ms.maxWaitThreshold))
+					//ms.SetErr(err)
+					close(ms.shutdown)
+				}
 				ms.toBeAckCommitTSMu.Unlock()
 			case <-ms.shutdown:
 				fmt.Printf("################################\n")
-				fmt.Printf("run exit\n")
+				fmt.Printf("run go1 exit\n")
 				fmt.Printf("################################\n")
 				return
 			}
