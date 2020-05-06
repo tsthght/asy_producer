@@ -1,6 +1,7 @@
 package mafka
 
 import (
+	"fmt"
 	"log"
 	"sync"
 	"time"
@@ -63,6 +64,10 @@ func (p *AsyProducer) Async(msg interface{}) string {
 	p.toBeAckCommitTSMu.Lock()
 	p.toBeAckTotalSize += len(m.Msg)
 	if p.toBeAckTotalSize > p.cfg.StallThreshold {
+		//test
+		fmt.Printf("#####\n")
+		fmt.Printf("enter flow control")
+		fmt.Printf("#####\n")
 		p.resumeProduce = make(chan struct{})
 		p.resumeProduceCloseOnce = sync.Once{}
 		waitResume = true
@@ -86,6 +91,8 @@ func (p *AsyProducer) Run () {
 		for {
 			select {
 			case msgs := <- p.CallBack.SuccessChan:
+				//test
+				time.Sleep(5 * time.Second)
 				for _, msg := range msgs {
 					m := msg.(message.Message)
 					p.LastApplyTimestamp = m.ApplyTime
@@ -95,6 +102,10 @@ func (p *AsyProducer) Run () {
 					p.toBeAckTotalSize -= len(m.Msg)
 					if p.toBeAckTotalSize < p.cfg.StallThreshold && p.resumeProduce != nil {
 						p.resumeProduceCloseOnce.Do(func() {
+							//test
+							fmt.Printf("#####\n")
+							fmt.Printf("exit flow control")
+							fmt.Printf("#####\n")
 							close(p.resumeProduce)
 						})
 					}
