@@ -163,7 +163,6 @@ func main() {
 		fmt.Printf("NewMafkaSyncer failed: %s\n", err.Error())
 		os.Exit(1)
 	}
-	defer producer.Close()
 
 	//generator data
 	go func() {
@@ -180,4 +179,6 @@ func main() {
 	}()
 
 	producer.Run()
+
+	producer.Close()
 }
