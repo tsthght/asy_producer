@@ -100,6 +100,7 @@ func (p *AsyProducer) Run () {
 					p.toBeAckCommitTSMu.Lock()
 					p.lastSuccessTime = time.Now()
 					p.toBeAckTotalSize -= len(m.Msg)
+					fmt.Printf("\n##### toBeAckTotalSize = %d\n", p.toBeAckTotalSize)
 					if p.toBeAckTotalSize < p.cfg.StallThreshold && p.resumeProduce != nil {
 						p.resumeProduceCloseOnce.Do(func() {
 							//test
