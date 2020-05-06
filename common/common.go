@@ -51,4 +51,14 @@ func CloseProducer() {
 	}
 }
 
+//export GetLatestSuccessTime
+func GetLatestSuccessTime() C.long {
+	return C.long(p.LastSuccessTime)
+}
+
+//export GetWaitThreshold
+func GetWaitThreshold() C.long {
+	return C.long(p.GetWaitThreshold())
+}
+
 func main() {}

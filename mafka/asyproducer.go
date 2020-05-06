@@ -13,13 +13,13 @@ import (
 type AsyProducer struct {
 	asyProducer *s3mafkaclient.MafkaAsynProducer
 
-	lastSuccessTime time.Time
 	toBeAckTotalSize       int
 	toBeAckCommitTSMu      sync.Mutex
 	resumeProduce          chan struct{}
 	resumeProduceCloseOnce sync.Once
 
 	LastApplyTimestamp  int64
+	LastSuccessTime int64
 
 	CallBack MafkaCallBack
 
@@ -50,6 +50,10 @@ func NewAsyProducer(cfg *config.ProducerConfig) (*AsyProducer, error) {
 
 func (p *AsyProducer) Close() {
 	close(p.shutdown)
+}
+
+func (p *AsyProducer) GetWaitThreshold() int64 {
+	return p.cfg.WaitThreshold
 }
 
 func (p *AsyProducer) Async(msg interface{}) string {
@@ -92,7 +96,7 @@ func (p *AsyProducer) Run () {
 					p.LastApplyTimestamp = m.ApplyTime
 
 					p.toBeAckCommitTSMu.Lock()
-					p.lastSuccessTime = time.Now()
+					p.LastSuccessTime = time.Now().Unix()
 					p.toBeAckTotalSize -= len(m.Msg)
 					if p.toBeAckTotalSize < p.cfg.StallThreshold && p.resumeProduce != nil {
 						p.resumeProduceCloseOnce.Do(func() {
