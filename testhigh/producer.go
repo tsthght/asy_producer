@@ -90,7 +90,7 @@ func (ms *MafkaSyncer) Run () {
 			}
 			ms.toBeAckCommitTSMu.Unlock()
 
-			time.Sleep(1 * time.Second)
+			time.Sleep(50 * time.Millisecond)
 		}
 	}()
 
