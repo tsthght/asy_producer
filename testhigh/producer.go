@@ -111,7 +111,7 @@ func main() {
 
 	producer, err := NewMafkaSyncer("../mafka/mafka.toml")
 	if err != nil {
-		fmt.Printf("%s\n", err.Error())
+		fmt.Printf("NewMafkaSyncer failed: %s\n", err.Error())
 		os.Exit(1)
 	}
 	defer producer.Close()
