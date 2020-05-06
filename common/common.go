@@ -9,7 +9,6 @@ import (
 )
 
 var p *mafka.AsyProducer = nil
-var abcdef int64 = 1024
 
 //export InitProducerOnce
 func InitProducerOnce(fn *C.char) *C.char {

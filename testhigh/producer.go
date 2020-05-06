@@ -164,5 +164,4 @@ func main() {
 	}()
 
 	producer.Run()
-
 }
