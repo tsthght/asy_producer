@@ -90,28 +90,33 @@ func (ms *MafkaSyncer) Run () {
 	go func() {
 		defer wg.Done()
 
-		for ; ; {
-			ts := int64(C.GetLatestApplyTime())
-			ms.toBeAckCommitTSMu.Lock()
-			fmt.Printf("##### before : %d\n", ms.toBeAckCommitTS.Size())
-			var next *list.Element
-			for elem := ms.toBeAckCommitTS.GetDataList().Front(); elem != nil; elem = next {
-				if elem.Value.(orderlist.Keyer).GetKey() <= ts {
-					next = elem.Next()
-					ms.success <- elem.Value.(*Item)
-					ms.toBeAckCommitTS.Remove(elem.Value.(orderlist.Keyer))
-				} else {
-					break
+		checkTick := time.NewTicker(time.Second)
+		defer checkTick.Stop()
+		for {
+			select {
+			case <-checkTick.C:
+				ts := int64(C.GetLatestApplyTime())
+				ms.toBeAckCommitTSMu.Lock()
+				fmt.Printf("##### before : %d\n", ms.toBeAckCommitTS.Size())
+				var next *list.Element
+				for elem := ms.toBeAckCommitTS.GetDataList().Front(); elem != nil; elem = next {
+					if elem.Value.(orderlist.Keyer).GetKey() <= ts {
+						next = elem.Next()
+						ms.success <- elem.Value.(*Item)
+						ms.toBeAckCommitTS.Remove(elem.Value.(orderlist.Keyer))
+					} else {
+						break
+					}
 				}
+				fmt.Printf("##### after : %d\n", ms.toBeAckCommitTS.Size())
+				ms.toBeAckCommitTSMu.Unlock()
+			case <-ms.shutdown:
+				fmt.Printf("################################\n")
+				fmt.Printf("run exit\n")
+				fmt.Printf("################################\n")
+				return
 			}
-			fmt.Printf("##### after : %d\n", ms.toBeAckCommitTS.Size())
-			ms.toBeAckCommitTSMu.Unlock()
-
-			time.Sleep(5 * time.Second)
 		}
-		fmt.Printf("################################\n")
-		fmt.Printf("run exit\n")
-		fmt.Printf("################################\n")
 	}()
 
 	for {
