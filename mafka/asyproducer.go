@@ -4,7 +4,6 @@ import (
 	"log"
 	"sync"
 	"time"
-	"fmt"
 
 	"github.com/tsthght/syncer/config"
 	"github.com/tsthght/syncer/message"
