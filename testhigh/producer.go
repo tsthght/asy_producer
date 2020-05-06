@@ -93,6 +93,7 @@ func (ms *MafkaSyncer) Run () {
 		for ; ; {
 			ts := int64(C.GetLatestApplyTime())
 			ms.toBeAckCommitTSMu.Lock()
+			fmt.Printf("##### before : %d\n", ms.toBeAckCommitTS.Size())
 			var next *list.Element
 			for elem := ms.toBeAckCommitTS.GetDataList().Front(); elem != nil; elem = next {
 				if elem.Value.(orderlist.Keyer).GetKey() <= ts {
@@ -103,6 +104,7 @@ func (ms *MafkaSyncer) Run () {
 					break
 				}
 			}
+			fmt.Printf("##### before : %d\n", ms.toBeAckCommitTS.Size())
 			ms.toBeAckCommitTSMu.Unlock()
 
 			time.Sleep(1000 * time.Millisecond)
