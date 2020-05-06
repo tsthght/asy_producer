@@ -107,7 +107,7 @@ func (ms *MafkaSyncer) Run () {
 			fmt.Printf("##### before : %d\n", ms.toBeAckCommitTS.Size())
 			ms.toBeAckCommitTSMu.Unlock()
 
-			time.Sleep(1000 * time.Millisecond)
+			time.Sleep(2 * time.Second)
 		}
 	}()
 
