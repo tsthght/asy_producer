@@ -151,6 +151,7 @@ func main() {
 		for i:=1;i > 0; i++ {
 			if i == 100 {
 				producer.Close()
+				break
 			}
 			it := Item{"hello mafka", int64(i)}
 			producer.Sync(&it)
