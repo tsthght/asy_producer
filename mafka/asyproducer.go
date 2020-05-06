@@ -49,9 +49,6 @@ func NewAsyProducer(cfg *config.ProducerConfig) (*AsyProducer, error) {
 }
 
 func (p *AsyProducer) Close() {
-	if p.asyProducer != nil {
-		p.asyProducer.Close()
-	}
 	close(p.shutdown)
 }
 
@@ -103,6 +100,8 @@ func (p *AsyProducer) Run () {
 					}
 					p.toBeAckCommitTSMu.Unlock()
 				}
+			case <-p.shutdown:
+				return
 			}
 		}
 	}()
@@ -115,6 +114,8 @@ func (p *AsyProducer) Run () {
 			case err := <- p.CallBack.FailureChan:
 				e := err.(error)
 				log.Fatal("fail to produce message to Mafka, please check the state of kafka server", e.Error())
+			case <-p.shutdown:
+				return
 			}
 		}
 	}()
@@ -122,8 +123,8 @@ func (p *AsyProducer) Run () {
 	for {
 		select {
 		case <-p.shutdown:
-			p.Close()
 			wg.Wait()
+			p.asyProducer.Close()
 			return
 		}
 	}
