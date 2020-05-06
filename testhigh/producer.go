@@ -180,5 +180,5 @@ func main() {
 
 	producer.Run()
 
-	producer.Close()
+	//producer.Close()
 }
