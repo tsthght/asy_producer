@@ -130,6 +130,7 @@ func (p *AsyProducer) Run () {
 	for {
 		select {
 		case <-p.shutdown:
+			fmt.Printf("========\n")
 			wg.Wait()
 			p.asyProducer.Close()
 			fmt.Printf("################################\n")
