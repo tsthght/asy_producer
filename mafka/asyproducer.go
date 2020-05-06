@@ -102,9 +102,6 @@ func (p *AsyProducer) Run () {
 					p.toBeAckCommitTSMu.Unlock()
 				}
 			case <-p.shutdown:
-				fmt.Printf("################################\n")
-				fmt.Printf("AsyProducer success chan exit\n")
-				fmt.Printf("################################\n")
 				return
 			}
 		}
@@ -119,9 +116,6 @@ func (p *AsyProducer) Run () {
 				e := err.(error)
 				log.Fatal("fail to produce message to Mafka, please check the state of kafka server", e.Error())
 			case <-p.shutdown:
-				fmt.Printf("################################\n")
-				fmt.Printf("AsyProducer error chan exit\n")
-				fmt.Printf("################################\n")
 				return
 			}
 		}
@@ -130,12 +124,8 @@ func (p *AsyProducer) Run () {
 	for {
 		select {
 		case <-p.shutdown:
-			fmt.Printf("========\n")
 			wg.Wait()
 			p.asyProducer.Close()
-			fmt.Printf("################################\n")
-			fmt.Printf("AsyProducer run exit\n")
-			fmt.Printf("################################\n")
 			return
 		}
 	}
