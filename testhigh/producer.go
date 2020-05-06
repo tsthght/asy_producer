@@ -18,10 +18,24 @@ import (
 	"go.uber.org/zap"
 )
 
+//simulate baseSyncer
+type baseSyncer struct {
+	success chan *Item
+}
+
+func newBaseSyncer() *baseSyncer {
+	return &baseSyncer{make(chan *Item, 8)}
+}
+
+func(b *baseSyncer) Success() chan *Item {
+	return b.success
+}
+
 type MafkaSyncer struct {
 	toBeAckCommitTSMu      sync.Mutex
 	toBeAckCommitTS *orderlist.MapList
 	shutdown chan struct{}
+	*baseSyncer
 }
 
 type Item struct {
@@ -42,9 +56,12 @@ func NewMafkaSyncer(cfgFile string) (*MafkaSyncer, error){
 		return nil, errors.New(C.GoString(ret))
 	}
 
-	executor := &MafkaSyncer{}
-	executor.shutdown = make(chan struct{})
-	executor.toBeAckCommitTS = orderlist.NewMapList()
+	executor := &MafkaSyncer{
+		toBeAckCommitTS: orderlist.NewMapList(),
+		shutdown: make(chan struct{}),
+		baseSyncer: newBaseSyncer(),
+	}
+
 	return executor, nil
 }
 
@@ -81,8 +98,7 @@ func (ms *MafkaSyncer) Run () {
 			for elem := ms.toBeAckCommitTS.GetDataList().Front(); elem != nil; elem = next {
 				if elem.Value.(orderlist.Keyer).GetKey() <= ts {
 					next = elem.Next()
-					//ms.success <- elem.Value.(*Item)
-					fmt.Printf("##### %v, %v", elem.Value.(*Item).data, elem.Value.(*Item).ts)
+					ms.success <- elem.Value.(*Item)
 					ms.toBeAckCommitTS.Remove(elem.Value.(orderlist.Keyer))
 				} else {
 					break
@@ -96,6 +112,9 @@ func (ms *MafkaSyncer) Run () {
 
 	for {
 		select {
+		case it := <- ms.success: {
+			fmt.Printf("\n## %s, %d \n", it.data, it.ts)
+		}
 		case <-ms.shutdown:
 			C.CloseProducer()
 			//ms.SetErr(nil)
