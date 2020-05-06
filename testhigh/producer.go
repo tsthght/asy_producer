@@ -76,6 +76,7 @@ func (ms *MafkaSyncer) Sync(item *Item) error {
 
 func (ms *MafkaSyncer) Close() {
 	C.CloseProducer()
+	close(ms.shutdown)
 }
 
 func (ms *MafkaSyncer) SetSafeMode(mode bool) bool {
@@ -109,6 +110,9 @@ func (ms *MafkaSyncer) Run () {
 
 			time.Sleep(5 * time.Second)
 		}
+		fmt.Printf("################################\n")
+		fmt.Printf("run exit\n")
+		fmt.Printf("################################\n")
 	}()
 
 	for {
@@ -119,7 +123,9 @@ func (ms *MafkaSyncer) Run () {
 		case <-ms.shutdown:
 			C.CloseProducer()
 			//ms.SetErr(nil)
-
+			fmt.Printf("################################\n")
+			fmt.Printf("main exit\n")
+			fmt.Printf("################################\n")
 			wg.Wait()
 			return
 		}
