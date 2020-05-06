@@ -73,23 +73,25 @@ func (ms *MafkaSyncer) Run () {
 	go func() {
 		defer wg.Done()
 
-		ts := int64(C.GetLatestApplyTime())
-		fmt.Printf("====== %d\n", ts)
-		ms.toBeAckCommitTSMu.Lock()
-		var next *list.Element
-		for elem := ms.toBeAckCommitTS.GetDataList().Front(); elem != nil; elem = next {
-			if elem.Value.(orderlist.Keyer).GetKey() <= ts {
-				next = elem.Next()
-				//ms.success <- elem.Value.(*Item)
-				fmt.Printf("##### %v, %v", elem.Value.(*Item).data, elem.Value.(*Item).ts)
-				ms.toBeAckCommitTS.Remove(elem.Value.(orderlist.Keyer))
-			} else {
-				break
+		for ; ; {
+			ts := int64(C.GetLatestApplyTime())
+			fmt.Printf("====== %d\n", ts)
+			ms.toBeAckCommitTSMu.Lock()
+			var next *list.Element
+			for elem := ms.toBeAckCommitTS.GetDataList().Front(); elem != nil; elem = next {
+				if elem.Value.(orderlist.Keyer).GetKey() <= ts {
+					next = elem.Next()
+					//ms.success <- elem.Value.(*Item)
+					fmt.Printf("##### %v, %v", elem.Value.(*Item).data, elem.Value.(*Item).ts)
+					ms.toBeAckCommitTS.Remove(elem.Value.(orderlist.Keyer))
+				} else {
+					break
+				}
 			}
-		}
-		ms.toBeAckCommitTSMu.Unlock()
+			ms.toBeAckCommitTSMu.Unlock()
 
-		time.Sleep(1 * time.Second)
+			time.Sleep(1 * time.Second)
+		}
 	}()
 
 	for {
