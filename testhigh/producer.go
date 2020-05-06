@@ -117,7 +117,7 @@ func (ms *MafkaSyncer) Run () {
 
 				tss := int64(C.GetLatestSuccessTime())
 				time.Sleep(5 * time.Second)
-				fmt.Printf("===== cur:%d, succ:%d\n\n", tss, time.Now().Unix())
+				fmt.Printf("===== cur:%d, succ:%d, thr:%d\n\n", tss, time.Now().Unix(), ms.maxWaitThreshold)
 				if /*ms.toBeAckCommitTS.Size() > 0 && */time.Now().Unix() - tss > ms.maxWaitThreshold {
 					//err := errors.New(fmt.Sprintf("fail to push msg to kafka after %v, check if kafka is up and working", ms.maxWaitThreshold))
 					//ms.SetErr(err)
