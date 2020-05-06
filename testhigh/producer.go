@@ -75,7 +75,10 @@ func (ms *MafkaSyncer) Sync(item *Item) error {
 }
 
 func (ms *MafkaSyncer) Close() {
-	close(ms.shutdown)
+	if ms.shutdown != nil {
+		close(ms.shutdown)
+		ms.shutdown = nil
+	}
 }
 
 func (ms *MafkaSyncer) SetSafeMode(mode bool) bool {
