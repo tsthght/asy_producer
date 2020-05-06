@@ -179,6 +179,6 @@ func main() {
 	}()
 
 	producer.Run()
-
+	//Run退出，已经Close掉了～
 	//producer.Close()
 }
