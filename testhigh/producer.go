@@ -121,8 +121,9 @@ func (ms *MafkaSyncer) Run () {
 				if /*ms.toBeAckCommitTS.Size() > 0 && */time.Now().Unix() - tss > ms.maxWaitThreshold {
 					//err := errors.New(fmt.Sprintf("fail to push msg to kafka after %v, check if kafka is up and working", ms.maxWaitThreshold))
 					//ms.SetErr(err)
-					ms.Close()
+					close(ms.shutdown)
 					fmt.Printf("#### close now #########################\n")
+
 				}
 				ms.toBeAckCommitTSMu.Unlock()
 			case <-ms.shutdown:
