@@ -3,7 +3,6 @@ package main
 import (
    "fmt"
    "os"
-   "sync"
    "time"
 
    "github.com/tsthght/syncer/config"
@@ -26,7 +25,7 @@ func main() {
    }
 
    defer p.Close()
-
+/*
    var wg sync.WaitGroup
    wg.Add(1)
    go func() {
@@ -40,13 +39,13 @@ func main() {
          }
       }
    }()
-
+*/
    //just for testmedium
    //go p.Consumer.ConsumeMessage(&mafka.BasicHandler{1})
 
-   for i := 10; i > 0 ; i-- {
+   for i := 100; i > 0 ; i-- {
       m := message.Message{"demo", int64(i)}
       p.Async(m)
-      time.Sleep(5 * time.Second)
+      time.Sleep(500 * time.Millisecond)
    }
 }
