@@ -46,7 +46,9 @@ func GetLatestApplyTime() C.long {
 
 //export CloseProducer
 func CloseProducer() {
-	p.Close()
+	if p != nil {
+		p.Close()
+	}
 }
 
 func main() {}
