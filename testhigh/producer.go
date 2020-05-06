@@ -122,6 +122,7 @@ func (ms *MafkaSyncer) Run () {
 					//err := errors.New(fmt.Sprintf("fail to push msg to kafka after %v, check if kafka is up and working", ms.maxWaitThreshold))
 					//ms.SetErr(err)
 					close(ms.shutdown)
+					fmt.Printf("=====exit===== cur:%d, succ:%d, thr:%d\n\n", tss, cur, ms.maxWaitThreshold)
 					fmt.Printf("#### close now #########################\n")
 
 				}
