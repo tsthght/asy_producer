@@ -44,6 +44,7 @@ func NewAsyProducer(cfg *config.ProducerConfig) (*AsyProducer, error) {
 	}
 
 	producer.shutdown = make(chan struct{})
+	producer.LastSuccessTime = time.Now().Unix()
 
 	return producer, nil
 }
