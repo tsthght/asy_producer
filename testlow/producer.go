@@ -26,7 +26,7 @@ func main() {
 
    defer p.Close()
 
-   p.Run()
+   go p.Run()
 /*
    var wg sync.WaitGroup
    wg.Add(1)
