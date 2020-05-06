@@ -149,6 +149,9 @@ func main() {
 	go func() {
 		time.Sleep(5 * time.Second)
 		for i:=1;i > 0; i++ {
+			if i == 10 {
+				producer.Close()
+			}
 			it := Item{"hello mafka", int64(i)}
 			producer.Sync(&it)
 			time.Sleep(500 * time.Millisecond)
