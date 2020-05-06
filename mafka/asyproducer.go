@@ -92,6 +92,7 @@ func (p *AsyProducer) Run () {
 			select {
 			case msgs := <- p.CallBack.SuccessChan:
 				//test
+				fmt.Printf("#### test #####\n")
 				time.Sleep(5 * time.Second)
 				for _, msg := range msgs {
 					m := msg.(message.Message)
