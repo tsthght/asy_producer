@@ -48,6 +48,6 @@ func main() {
    for i := 100; i > 0 ; i-- {
       m := message.Message{"demo", int64(i)}
       p.Async(m)
-      time.Sleep(1 * time.Millisecond)
+      time.Sleep(10 * time.Millisecond)
    }
 }
