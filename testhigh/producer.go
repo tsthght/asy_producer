@@ -90,7 +90,7 @@ func (ms *MafkaSyncer) Run () {
 			}
 			ms.toBeAckCommitTSMu.Unlock()
 
-			time.Sleep(50 * time.Millisecond)
+			time.Sleep(500 * time.Millisecond)
 		}
 	}()
 
@@ -125,7 +125,7 @@ func main() {
 		for i:=1;i > 0; i++ {
 			it := Item{"hello mafka", int64(i)}
 			producer.Sync(&it)
-			time.Sleep(500 * time.Millisecond)
+			time.Sleep(50 * time.Millisecond)
 		}
 	}()
 
