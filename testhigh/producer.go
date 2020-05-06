@@ -149,7 +149,7 @@ func main() {
 	go func() {
 		time.Sleep(5 * time.Second)
 		for i:=1;i > 0; i++ {
-			if i == 100 {
+			if i == 50 {
 				producer.Close()
 				break
 			}
