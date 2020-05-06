@@ -38,7 +38,7 @@ func NewMafkaSyncer(cfgFile string) (*MafkaSyncer, error){
 		return nil, errors.New("config file name is empty")
 	}
 	ret := C.InitProducerOnce(C.CString(cfgFile))
-	if len(C.GoString(ret)) == 0 {
+	if len(C.GoString(ret)) > 0 {
 		return nil, errors.New(C.GoString(ret))
 	}
 
