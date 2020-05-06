@@ -75,7 +75,6 @@ func (ms *MafkaSyncer) Sync(item *Item) error {
 }
 
 func (ms *MafkaSyncer) Close() {
-	C.CloseProducer()
 	close(ms.shutdown)
 }
 
@@ -121,12 +120,12 @@ func (ms *MafkaSyncer) Run () {
 			fmt.Printf("\n##success## %s, %d \n", it.data, it.ts)
 		}
 		case <-ms.shutdown:
-			C.CloseProducer()
 			//ms.SetErr(nil)
+			wg.Wait()
+			C.CloseProducer()
 			fmt.Printf("################################\n")
 			fmt.Printf("main exit\n")
 			fmt.Printf("################################\n")
-			wg.Wait()
 			return
 		}
 	}
