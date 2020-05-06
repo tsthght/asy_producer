@@ -77,6 +77,7 @@ func (p *AsyProducer) Async(msg interface{}) string {
 	if waitResume {
 		select {
 		case <-p.resumeProduce:
+			fmt.Printf("\n##### out here\n")
 			return ""
 		}
 	}
