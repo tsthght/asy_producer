@@ -5,5 +5,5 @@ type Message struct {
 	Sql    string `json:"statement"`
 	Cts    int64  `json:"committed-timestamp"`
 	Ats    int64  `json:"applied-timestamp"`
-	seq    int64  `json:"uuid"`
+	Seq    int64  `json:"uuid"`
 }
