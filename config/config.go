@@ -18,7 +18,7 @@ type ProducerConfig struct {
 	WaitThreshold              int64       `toml:"wait-threshold" json:"wait-threshold"`
 	MaxRetryTimes              int         `toml:"max-retry-times" json:"max-retry-times"`
 	MaxAsyncBufferChanSize     int64       `toml:"max-chan-size" json:"max-chan-size"`
-	SafeMode                   bool               `toml:"safe-mode" json:"safe-mode"`
+	SafeMode                   int         `toml:"safe-mode" json:"safe-mode"`
 
 	LocalHost                  string
 }
@@ -35,7 +35,7 @@ func NewProducerConfig() *ProducerConfig {
 	fs.Int64Var(&cfg.WaitThreshold, "wait-threshold", 30000, "wait threshold (ms)")
 	fs.IntVar(&cfg.MaxRetryTimes, "max-retry-times", 10000, "max retry times")
 	fs.Int64Var(&cfg.MaxAsyncBufferChanSize, "max-chan-size", 1 << 30, "max async buffer chan size")
-	fs.BoolVar(&cfg.SafeMode, "safe-mode", false, "enable safe mode to make syncer reentrant")
+	fs.IntVar(&cfg.SafeMode, "safe-mode", 0, "enable safe mode to make syncer reentrant")
 
 	cfg.fs = fs
 	return cfg

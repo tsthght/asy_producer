@@ -62,8 +62,8 @@ func GetWaitThreshold() C.long {
 }
 
 //export GetSafeMode
-func GetSafeMode() C.bool {
-	return C.bool(p.GetSafeMode())
+func GetSafeMode() C.int {
+	return C.int(p.GetSafeMode())
 }
 
 func main() {}

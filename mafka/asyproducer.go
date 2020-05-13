@@ -57,7 +57,7 @@ func (p *AsyProducer) GetWaitThreshold() int64 {
 	return p.cfg.WaitThreshold
 }
 
-func (p *AsyProducer) GetSafeMode() bool {
+func (p *AsyProducer) GetSafeMode() int {
 	return p.cfg.SafeMode
 }
 
