@@ -30,12 +30,12 @@ func InitProducerOnce(fn *C.char) *C.char {
 }
 
 //export AsyncMessage
-func AsyncMessage (msg *C.char, t C.long) *C.char {
+func AsyncMessage (db, tb, sql *C.char, cts, ats, tso C.long) *C.char {
 	if p == nil {
 		return C.CString("")
 	}
 
-	m := message.Message{C.GoString(msg), int64(t)}
+	m := message.Message{db, tb, sql, cts, ats, tso}
 	return C.CString(p.Async(m))
 }
 

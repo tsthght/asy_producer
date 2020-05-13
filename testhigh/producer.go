@@ -69,7 +69,7 @@ func NewMafkaSyncer(cfgFile string) (*MafkaSyncer, error){
 
 func (ms *MafkaSyncer) Sync(item *Item) error {
 	//do sth translator
-	C.AsyncMessage(C.CString(string(item.data)), C.long(item.ts))
+	C.AsyncMessage(C.CString("db"), C.CString("tb"), C.CString(string(item.data)), C.long(item.ts), C.long(item.ts), C.long(item.ts))
 	ms.toBeAckCommitTSMu.Lock()
 	ms.toBeAckCommitTS.Push(item)
 	ms.toBeAckCommitTSMu.Unlock()

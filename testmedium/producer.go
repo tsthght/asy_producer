@@ -38,7 +38,7 @@ func main() {
 	}()
 */
 	for i:=0; i< 10; i++ {
-		ret := C.AsyncMessage(C.CString("hello golang"), C.long(i))
+		ret := C.AsyncMessage(C.CString("db"), C.CString("tb"), C.CString("insert into t1 values (1)"), C.long(i), C.long(i), C.long(i))
 		if len(C.GoString(ret)) > 0 {
 			fmt.Printf("async error: %s\n", C.GoString(ret))
 		}

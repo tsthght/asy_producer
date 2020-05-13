@@ -46,7 +46,7 @@ func main() {
    //go p.Consumer.ConsumeMessage(&mafka.BasicHandler{1})
 
    for i := 100; i > 0 ; i-- {
-      m := message.Message{"demo", int64(i)}
+      m := message.Message{"db", "tb", "insert into tb values (1)", int64(i), int64(i), int64(i)}
       p.Async(m)
       time.Sleep(1 * time.Millisecond)
    }

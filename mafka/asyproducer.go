@@ -66,7 +66,7 @@ func (p *AsyProducer) Async(msg interface{}) string {
 	waitResume := false
 
 	p.toBeAckCommitTSMu.Lock()
-	p.toBeAckTotalSize += len(m.Msg)
+	p.toBeAckTotalSize += len(m.Sql)
 	if p.toBeAckTotalSize > p.cfg.StallThreshold {
 		p.resumeProduce = make(chan struct{})
 		p.resumeProduceCloseOnce = sync.Once{}
@@ -94,11 +94,11 @@ func (p *AsyProducer) Run () {
 			case msgs := <- p.CallBack.SuccessChan:
 				for _, msg := range msgs {
 					m := msg.(message.Message)
-					p.LastApplyTimestamp = m.ApplyTime
+					p.LastApplyTimestamp = m.Tso
 
 					p.toBeAckCommitTSMu.Lock()
 					p.LastSuccessTime = time.Now().UnixNano()
-					p.toBeAckTotalSize -= len(m.Msg)
+					p.toBeAckTotalSize -= len(m.Sql)
 					if p.toBeAckTotalSize < p.cfg.StallThreshold && p.resumeProduce != nil {
 						p.resumeProduceCloseOnce.Do(func() {
 							close(p.resumeProduce)
