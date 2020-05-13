@@ -98,7 +98,7 @@ func (p *AsyProducer) Run () {
 			case msgs := <- p.CallBack.SuccessChan:
 				for _, msg := range msgs {
 					m := msg.(message.Message)
-					p.LastApplyTimestamp = m.Cts
+					p.LastApplyTimestamp = m.Tso
 
 					p.toBeAckCommitTSMu.Lock()
 					p.LastSuccessTime = time.Now().UnixNano()
