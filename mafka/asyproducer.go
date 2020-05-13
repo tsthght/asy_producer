@@ -57,6 +57,10 @@ func (p *AsyProducer) GetWaitThreshold() int64 {
 	return p.cfg.WaitThreshold
 }
 
+func (p *AsyProducer) GetSafeMode() bool {
+	return p.cfg.SafeMode
+}
+
 func (p *AsyProducer) Async(msg interface{}) string {
 	m := msg.(message.Message)
 	if err := p.asyProducer.SendMessageToChan(m); err != nil {
