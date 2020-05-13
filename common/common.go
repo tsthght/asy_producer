@@ -35,7 +35,7 @@ func AsyncMessage (db, tb, sql *C.char, cts, ats, tso C.long) *C.char {
 		return C.CString("")
 	}
 
-	m := message.Message{db, tb, sql, cts, ats, tso}
+	m := message.Message{C.GoString(db), C.GoString(tb), C.GoString(sql), int64(cts), int64(ats), int64(tso)}
 	return C.CString(p.Async(m))
 }
 
