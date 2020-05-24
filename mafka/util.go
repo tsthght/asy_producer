@@ -3,7 +3,8 @@ package mafka
 import (
 	"errors"
 	"net"
-	"os"
+	"os/exec"
+	"strings"
 )
 
 func GetLocalIP() (error, string) {
@@ -23,12 +24,13 @@ func GetLocalIP() (error, string) {
 	return errors.New("can not get local ip"), ""
 }
 
-func GetLocalHost() (error, string) {
-	host, err := os.Hostname()
+func GetLocalHost(ip string) (error, string) {
+	host, err := exec.Command("nslookup", ip, "10.10.10.10").Output()
 	if err != nil {
 		return err, ""
 	}
-	return nil, host
+	pp := strings.Split(string(host), "= ")
+	return nil, strings.TrimSpace(pp[1])
 }
 
 type MafkaMessage struct {

@@ -11,7 +11,7 @@ func newCastleClient(cfg *config.ProducerConfig) (castleManager *s3castleclient.
 	if err != nil {
 		return nil, err
 	}
-	err, host = GetLocalHost()
+	err, host = GetLocalHost(ip)
 	if err != nil {
 		return nil, err
 	}
